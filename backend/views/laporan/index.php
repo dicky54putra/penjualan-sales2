@@ -1,5 +1,6 @@
 <?php
 
+use backend\models\Barang;
 use yii\helpers\Html;
 // use yii\grid\GridView;
 use kartik\grid\GridView;
@@ -11,13 +12,15 @@ use backend\models\Userrole;
 use backend\models\Penjualan;
 use backend\models\PenjualanDetail;
 use backend\models\Login;
-
+use backend\models\Pelanggan;
+use backend\models\Pemesanan;
+use backend\models\Sales;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\PurchaseOrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Laporan Penjualan';
+$this->title = 'Laporan Pemesanan';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="purchase-order-index">
@@ -47,26 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
 										</div>
 									</td>
 									<td width="5%"></td>
-									<td width="10%">
-										<div class="form-group">Sales</div>
-									</td>
-									<td align="center" width="5%">
-										<div class="form-group">:</div>
-									</td>
-									<td width="30%">
-										<div class="form-group">
-											<select class="form-control" name="sales">
-												<option value="">Pilih Sales</option>
-												<?php
-												$query_sales = Userrole::find()->joinWith("login")->where(["id_system_role" => 23])->orderBy("login.nama")->all();
-												foreach ($query_sales as $key => $data) {
-													# code...
-												?>
-													<option value="<?= $data->login->id_login ?>"><?= $data->login->nama ?></option>
-												<?php } ?>
-											</select>
-										</div>
-									</td>
+
 								</tr>
 								<tr>
 									<td width="10%">
@@ -80,25 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
 											<input type="date" name="tanggal_akhir" class="form-control" required>
 										</div>
 									</td>
-									<td width="5%"></td>
-									<td width="10%">
-										<div class="form-group">Status</div>
-									</td>
-									<td align="center" width="5%">
-										<div class="form-group">:</div>
-									</td>
-									<td width="30%">
-										<div class="form-group">
-											<select class="form-control" name="status">
-												<option value="">Pilih Status</option>
-												<option value="1">Order</option>
-												<option value="2">Penjualan</option>
-												<option value="3">Pembayaran</option>
-												<option value="4">Selesai</option>
-												<option value="5">Canceled</option>
-											</select>
-										</div>
-									</td>
+
 								</tr>
 								<tr>
 									<td></td>
@@ -125,11 +91,10 @@ $this->params['breadcrumbs'][] = $this->title;
 			<p style="font-family: 'Times New Roman'">
 				<h4>
 					<?= $this->title ?> Pertanggal : <?= date('d/m/Y', strtotime($tanggal_awal)) ?> s/d <?= date('d/m/Y', strtotime($tanggal_akhir)) ?>
-					<?= Html::a('Cetak Laporan', ['cetak-laporan', 'tanggal_awal' => $tanggal_awal, 'tanggal_akhir' => $tanggal_akhir, 'sales' => $sales, 'status' => $status], ['class' => 'btn btn-primary', 'target' => '_blank', 'method' => 'post']) ?>
-					<?= Html::a('Export Laporan', ['export-laporan', 'tanggal_awal' => $tanggal_awal, 'tanggal_akhir' => $tanggal_akhir, 'sales' => $sales, 'status' => $status], ['class' => 'btn btn-success', 'target' => '_blank', 'method' => 'post']) ?>
+
 					<br>
 					<?php
-					$sales_penjualan = Login::findOne($sales);
+					$sales_penjualan = Sales::findOne($sales);
 					if (!empty($sales_penjualan->nama)) {
 						# code...
 						echo 'Sales : ' . $sales_penjualan->nama;
@@ -159,139 +124,95 @@ $this->params['breadcrumbs'][] = $this->title;
 					?>
 				</h4>
 			</p>
-			<div class="box">
-				<div class="box-header">
-					<div class="col-md-12" style="padding: 0;">
-						<div class="box-body">
+			<?php
+			$query_pemesanan = Pemesanan::find()->where(['BETWEEN', 'tanggal_pemesanan', $tanggal_awal, $tanggal_akhir])->orderBy("tanggal_pemesanan ASC")->groupBy('id_sales')->all();
 
-							<table class="table">
+			foreach ($query_pemesanan as $key => $data) {
+				$barang = Barang::findOne($data['id_barang']);
+				$sum_pemesanan = Yii::$app->db->createCommand("SELECT SUM(jumlah_pemesanan) FROM pemesanan WHERE id_sales = '$data[id_sales]'")->queryScalar();
+				$sales = Sales::findOne($data['id_sales']);
+			?>
+				<div class="box">
+					<div class="panel panel-primary">
+						<div class="panel-heading" style="overflow-x: auto;">
+							<style>
+								.tabel {
+									width: 100%;
+								}
+
+								.tabel th,
+								.tabel td {
+									padding: 2px;
+								}
+							</style>
+							<table class="tabel">
 								<thead>
 									<tr>
-										<th>#</th>
-										<th>Nama Sales</th>
-										<th>Jumlah SP</th>
-										<th>KOM</th>
-										<th>REG</th>
-										<th>Value Kompor</th>
-										<th>Value Regulator</th>
-										<th>Total</th>
+										<th style="width: 12%;white-space: nowrap;">Nama Sales</th>
+										<th style="width: 12%;white-space: nowrap;">Total Pemesanan</th>
+										<th></th>
+									</tr>
+									<tr>
+										<td style="text-transform: capitalize;"><?= $sales->nama_sales ?></td>
+										<td><?= $sum_pemesanan ?></td>
 									</tr>
 								</thead>
-								<tbody>
-									<?php
-									$filter_sales = "";
-									if (!empty($sales)) {
-										# code...
-										$filter_sales = ' AND id_login = ' . $sales . '';
-									}
-
-									$filter_status = "";
-									if (!empty($status)) {
-										# code...
-										$filter_status = ' AND status = ' . $status . '';
-									}
-
-									$no = 1;
-									$totalan_total_sum = 0;
-									$query_penjualan = Yii::$app->db->createCommand("
-                            SELECT *
-                            FROM penjualan
-                            WHERE tanggal_penjualan BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-                            $filter_sales
-                            $filter_status
-                            GROUP BY id_login
-                            ")->query();
-									// $query_penjualan = Penjualan::find()->where('tanggal_penjualan BETWEEN '.$tanggal_awal.' AND '.$tanggal_akhir.' '.$filter_sales.'')->groupBy("id_login")->all();
-									foreach ($query_penjualan as $key => $data) {
-										# code...
-										$sales_penjualan = Login::findOne($data['id_login']);
-
-										$count_penjualan_per_sales = Yii::$app->db->createCommand("
-	                            SELECT COUNT(*)
-	                            FROM penjualan
-	                            WHERE tanggal_penjualan BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-	                            AND id_login = '$data[id_login]'
-	                            $filter_sales
-	                            $filter_status	
-	                            ")->queryScalar();
-										// $count_penjualan_per_sales = Penjualan::find()->where(['BETWEEN', 'tanggal_penjualan', $tanggal_awal, $tanggal_akhir])->andWhere(['id_login' => $data['id_login']])->andWhere(['status' => $data['status']])->count();
-
-										$count_penjualan_per_sales_kom = Yii::$app->db->createCommand("
-	                            SELECT COUNT(*)
-	                            FROM penjualan
-	                            LEFT JOIN penjualan_detail ON penjualan_detail.id_penjualan = penjualan.id_penjualan
-	                            WHERE tanggal_penjualan BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-	                            AND id_login = '$data[id_login]'
-	                            AND id_barang = 1
-	                            $filter_sales
-	                            $filter_status	
-	                            ")->queryScalar();
-										// $count_penjualan_per_sales_kom = Penjualan::find()->leftJoin("penjualan_detail", "penjualan_detail.id_penjualan = penjualan.id_penjualan")->where(['BETWEEN', 'tanggal_penjualan', $tanggal_awal, $tanggal_akhir])->andWhere(['id_login' => $data['id_login']])->andWhere(["id_barang" => 1])->andWhere(['status' => $data['status']])->count();
-
-										$count_penjualan_per_sales_reg = Yii::$app->db->createCommand("
-	                            SELECT COUNT(*)
-	                            FROM penjualan
-	                            LEFT JOIN penjualan_detail ON penjualan_detail.id_penjualan = penjualan.id_penjualan
-	                            WHERE tanggal_penjualan BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-	                            AND id_login = '$data[id_login]'
-	                            AND id_barang = 2
-	                            $filter_sales
-	                            $filter_status	
-	                            ")->queryScalar();
-										// $count_penjualan_per_sales_reg = Penjualan::find()->leftJoin("penjualan_detail", "penjualan_detail.id_penjualan = penjualan.id_penjualan")->where(['BETWEEN', 'tanggal_penjualan', $tanggal_awal, $tanggal_akhir])->andWhere(['id_login' => $data['id_login']])->andWhere(["id_barang" => 2])->andWhere(['status' => $data['status']])->count();
-
-										# query untuk mencari array id penjualan
-										$array_penjualan = Yii::$app->db->createCommand("
-	                            SELECT *
-	                            FROM penjualan
-	                            WHERE tanggal_penjualan BETWEEN '$tanggal_awal' AND '$tanggal_akhir'
-	                            AND id_login = '$data[id_login]'
-	                            $filter_sales
-	                            $filter_status
-	                            ")->query();
-										// $array_penjualan = Penjualan::find()->where(['BETWEEN', 'tanggal_penjualan', $tanggal_awal, $tanggal_akhir])->andWhere(['id_login' => $data['id_login']])->all();
-										$id_penjualan = array();
-										foreach ($array_penjualan as $key => $value) {
-											# code...
-											$id_penjualan[] = $value['id_penjualan'];
-										}
-										$array_id_penjualan = implode(', ', $id_penjualan);
-
-										# untuk kom
-										$query = (new \yii\db\Query())->from('penjualan_detail')->where("id_penjualan IN ($array_id_penjualan)")->andWhere(['id_barang' => 1]);
-										$sum_sub_total_kom = $query->sum('sub_total');
-
-										# untuk reg
-										$query = (new \yii\db\Query())->from('penjualan_detail')->where("id_penjualan IN ($array_id_penjualan)")->andWhere(['id_barang' => 2]);
-										$sum_sub_total_reg = $query->sum('sub_total');
-
-										$total_sum = $sum_sub_total_kom + $sum_sub_total_reg;
-										$totalan_total_sum += $total_sum;
-									?>
-										<tr>
-											<td><?= $no++ . '.' ?></td>
-											<td><?= $sales_penjualan->nama ?></td>
-											<td><?= $count_penjualan_per_sales ?></td>
-											<td><?= $count_penjualan_per_sales_kom ?></td>
-											<td><?= $count_penjualan_per_sales_reg ?></td>
-											<td style="text-align: right;"><?= ribuan($sum_sub_total_kom) ?></td>
-											<td style="text-align: right;"><?= ribuan($sum_sub_total_reg) ?></td>
-											<td style="text-align: right;"><?= ribuan($total_sum) ?></td>
-										</tr>
-									<?php } ?>
-								</tbody>
-								<tfoot>
-									<tr>
-										<th colspan="7">Total</th>
-										<th style="text-align: right;"><?= ribuan($totalan_total_sum) ?></th>
-									</tr>
-								</tfoot>
 							</table>
+						</div>
+						<div class="panel-body">
+							<div class="col-md-12">
+								<div class="box-body" style="overflow-x: auto;">
+									<table class="table table-condensed table-bordered">
+										<thead>
+											<tr>
+												<th style="width: 7%;">Nama Barang</th>
+												<th style="width: 22%;">Harga</th>
+												<th style="width: 10%; text-align: center;">Paket Pemesanan</th>
+												<th style="width: 10%; text-align: center;">Pelanggan</th>
+												<th style="width: 10%; text-align: center;">Jumlah Pesanan</th>
+											</tr>
+										</thead>
+										<tbody>
 
+											<?php
+											$query_pemesanan2 = Pemesanan::find()->where(['BETWEEN', 'tanggal_pemesanan', $tanggal_awal, $tanggal_akhir])->andWhere(['id_sales' => $data['id_sales']])->orderBy("tanggal_pemesanan ASC")->all();
+											$total = 0;
+											foreach ($query_pemesanan2 as $data2) {
+
+												$barang2 = Barang::findOne($data2['id_barang']);
+												$pelanggan = Pelanggan::findOne($data2['id_pelanggan']);
+
+												$rupiah = $barang2->harga * $data2['jumlah_pemesanan'];
+
+												$total += $rupiah;
+											?>
+												<tr>
+													<td style="text-transform: capitalize;"><?= $barang2->nama_barang ?></td>
+													<td style="text-transform: capitalize;"><?= ribuan($barang2->harga) ?></td>
+													<td style="text-transform: capitalize;"><?= $data2['paket_pemesanan'] ?></td>
+													<td style="text-transform: capitalize;"><?= $pelanggan->nama_pelanggan ?></td>
+													<td style="text-transform: capitalize;"><?= $data2['jumlah_pemesanan'] ?></td>
+												</tr>
+											<?php } ?>
+										</tbody>
+										<tfoot>
+
+											<tr>
+												<td colspan="3"> </td>
+												<td style="font-weight:bold;" align="right">Total</td>
+												<td align="right"> <?= ribuan($total) ?> </td>
+											</tr>
+										</tfoot>
+									</table>
+
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			<?php
+			}
+			?>
 		<?php
 		}
 		?>
