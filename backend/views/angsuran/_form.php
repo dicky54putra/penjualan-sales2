@@ -12,13 +12,13 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'tanggal_angsuran')->textInput() ?>
+    <?= $form->field($model, 'tanggal_angsuran')->textInput(['type' => 'date', 'value' => date('Y-m-d')]) ?>
 
-    <?= $form->field($model, 'total_angsuran')->textInput() ?>
+    <?= $form->field($model, 'total_angsuran')->textInput(['readonly' => true, 'value' => $_GET['angsuran']]) ?>
 
-    <?= $form->field($model, 'id_kolektor')->textInput() ?>
+    <?= $form->field($model, 'id_kolektor')->textInput(['value' => $_GET['kolektor'], 'type' => 'hidden'])->label(false) ?>
 
-    <?= $form->field($model, 'id_pemesanan')->textInput() ?>
+    <?= $form->field($model, 'id_pemesanan')->textInput(['value' => $_GET['pemesanan'], 'type' => 'hidden'])->label(false) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
