@@ -47,4 +47,35 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <div class="box box-primary">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <?= Html::a('Pembayaran', ['update', 'id' => $model->id_penjualan], ['class' => 'btn btn-success']) ?>
+
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-striped">
+                        <tr>
+                            <td><b>Yang Harus Dibayar</b></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
