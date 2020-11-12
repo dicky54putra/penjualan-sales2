@@ -73,4 +73,21 @@ class LaporanController extends Controller
             'status' => $status,
         ]);
     }
+
+    public function actionPemesanan()
+    {
+        $tanggal_awal = Yii::$app->request->post('tanggal_awal');
+        $tanggal_akhir = Yii::$app->request->post('tanggal_akhir');
+        $sales = Yii::$app->request->post('sales');
+        $status = Yii::$app->request->post('status');
+
+
+
+        return $this->render('pemesanan', [
+            'tanggal_awal' => $tanggal_awal,
+            'tanggal_akhir' => $tanggal_akhir,
+            'sales' => $sales,
+            'status' => $status,
+        ]);
+    }
 }
