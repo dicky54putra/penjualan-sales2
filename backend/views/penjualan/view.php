@@ -56,12 +56,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="col-md-6">
                     <?php
                     $barang = Yii::$app->db->createCommand("SELECT * FROM pemesanan LEFT JOIN barang ON barang.id_barang = pemesanan.id_barang WHERE pemesanan.id_pemesanan = $model->id_pemesanan")->queryOne();
-                    $nominal_barang = (!empty($barang['harga'])) ? $barang['harga'] : 0;
+                    $nominal_barang = (!empty($barang['harga'])) ? $barang_ = $barang['harga'] * $model->total_penjualan : 0;
 
                     if ($barang['jenis_pembayaran'] == 'cash') {
-                        $angsuran = $barang['harga'];
+                        $angsuran = $barang_;
                     } else {
-                        $angsuran = $barang['harga'] / 10;
+                        $angsuran = $barang_ / 10;
                     }
 
                     $login = Login::findOne(['id_login' => Yii::$app->user->id]);
@@ -74,7 +74,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     // var_dump($kolektor, $login);
                     // die;
                     ?>
-                    <?= Html::a('Pembayaran', ['angsuran/create', 'pemesanan' => $model->id_pemesanan, 'kolektor' => $kolektor->id_kolektor, 'angsuran' => $angsuran, 'penjualan' => $model->id_penjualan], ['class' => 'btn btn-success']) ?>
                     <table class="table">
                         <thead>
                             <tr>
@@ -99,8 +98,8 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td><?= tanggal_indo($val['tanggal_angsuran']) ?></td>
                                     <td><?= $val['total_angsuran'] ?></td>
                                     <td>
-                                        <?= Html::a('<span class="glyphicon glyphicon-print"></span>', ['update', 'id' => $val['id_angsuran']], ['class' => 'btn btn-primary btn-sm']) ?>
-                                        <?= Html::a('<span class="glyphicon glyphicon-edit"></span>', ['update', 'id' => $val['id_angsuran']], ['class' => 'btn btn-success btn-sm']) ?>
+                                        <?= Html::a('<span class="glyphicon glyphicon-print"></span>', ['print', 'id' => $val['id_angsuran']], ['class' => 'btn btn-primary btn-sm', 'target' => '_BLANK']) ?>
+                                        <?= Html::a('<span class="glyphicon glyphicon-edit"></span>', ['angsuran/update', 'id' => $val['id_angsuran'], 'pemesanan' => $model->id_pemesanan, 'kolektor' => $kolektor->id_kolektor, 'angsuran' => $angsuran, 'penjualan' => $model->id_penjualan], ['class' => 'btn btn-success btn-sm']) ?>
                                         <?= Html::a(
                                             '<span class="glyphicon glyphicon-trash"></span>',
                                             ['angsuran/delete', 'id' => $val['id_angsuran'], 'back' => $_GET['id']],
@@ -119,6 +118,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     </table>
                 </div>
                 <div class="col-md-6">
+                    <?php
+                    if ($nominal_barang > $dibayar) {
+                    ?>
+                        <?= Html::a('Pembayaran', ['angsuran/create', 'pemesanan' => $model->id_pemesanan, 'kolektor' => $kolektor->id_kolektor, 'angsuran' => $angsuran, 'penjualan' => $model->id_penjualan], ['class' => 'btn btn-success', 'style' => ['margin-bottom' => '12px']]) ?>
+                    <?php } ?>
                     <table class="table table-striped">
                         <tr>
                             <td><b>Yang Harus Dibayar</b></td>
@@ -141,5 +145,4 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
         </div>
     </div>
-
 </div>

@@ -9,42 +9,49 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="barang-form">
+    <div class="box box-success">
+        <div class="box-header">
+            <div class="col-md-12" style="padding: 0;">
+                <div class="box-body">
+                    <?php $form = ActiveForm::begin(); ?>
 
-    <?php $form = ActiveForm::begin(); ?>
+                    <?= $form->field($model, 'nama_barang')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nama_barang')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'harga')->widget(\yii\widgets\MaskedInput::className(), [
+                        'clientOptions' => [
+                            'alias' => 'decimal',
+                            'digits' => 2,
+                            'digitsOptional' => false,
+                            'rightAlign' => false,
+                            'radixPoint' => '.',
+                            'groupSeparator' => ',',
+                            'autoGroup' => true,
+                            'removeMaskOnSubmit' => true,
+                        ],
+                    ]) ?>
 
-    <?= $form->field($model, 'harga')->widget(\yii\widgets\MaskedInput::className(), [
-        'clientOptions' => [
-            'alias' => 'decimal',
-            'digits' => 2,
-            'digitsOptional' => false,
-            'rightAlign' => false,
-            'radixPoint' => '.',
-            'groupSeparator' => ',',
-            'autoGroup' => true,
-            'removeMaskOnSubmit' => true,
-        ],
-    ]) ?>
+                    <?= $form->field($model, 'jenis_harga')->dropDownList(
+                        [
+                            'konsumen' => 'konsumen',
+                            'koordinator' => 'koordinator'
+                        ]
+                    ) ?>
 
-    <?= $form->field($model, 'jenis_harga')->dropDownList(
-        [
-            'konsumen' => 'konsumen',
-            'koordinator' => 'koordinator'
-        ]
-    ) ?>
+                    <?= $form->field($model, 'jenis_pembayaran')->dropDownList(
+                        [
+                            'cash' => 'cash',
+                            'credit' => 'credit'
+                        ]
+                    ) ?>
 
-    <?= $form->field($model, 'jenis_pembayaran')->dropDownList(
-        [
-            'cash' => 'cash',
-            'credit' => 'credit'
-        ]
-    ) ?>
+                    <div class="form-group">
+                        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                    </div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                    <?php ActiveForm::end(); ?>
+
+                </div>
+            </div>
+        </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>

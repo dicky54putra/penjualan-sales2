@@ -173,17 +173,13 @@ $this->params['breadcrumbs'][] = $this->title;
 											</tr>
 										</thead>
 										<tbody>
-
 											<?php
 											$query_pemesanan2 = Pemesanan::find()->where(['BETWEEN', 'tanggal_pemesanan', $tanggal_awal, $tanggal_akhir])->andWhere(['id_sales' => $data['id_sales']])->orderBy("tanggal_pemesanan ASC")->all();
 											$total = 0;
 											foreach ($query_pemesanan2 as $data2) {
-
 												$barang2 = Barang::findOne($data2['id_barang']);
 												$pelanggan = Pelanggan::findOne($data2['id_pelanggan']);
-
 												$rupiah = $barang2->harga * $data2['jumlah_pemesanan'];
-
 												$total += $rupiah;
 											?>
 												<tr>
@@ -191,12 +187,12 @@ $this->params['breadcrumbs'][] = $this->title;
 													<td style="text-transform: capitalize;"><?= ribuan($barang2->harga) ?></td>
 													<td style="text-transform: capitalize;"><?= $data2['paket_pemesanan'] ?></td>
 													<td style="text-transform: capitalize;"><?= $pelanggan->nama_pelanggan ?></td>
-													<td style="text-transform: capitalize;"><?= $data2['jumlah_pemesanan'] ?></td>
+													<td style="text-transform: capitalize;"><?= $data2['jumlah_pemesanan'] ?> <p style="float: right;"><?= ribuan($rupiah) ?></p>
+													</td>
 												</tr>
 											<?php } ?>
 										</tbody>
 										<tfoot>
-
 											<tr>
 												<td colspan="3"> </td>
 												<td style="font-weight:bold;" align="right">Total</td>
@@ -218,5 +214,4 @@ $this->params['breadcrumbs'][] = $this->title;
 		?>
 
 	</div>
-</div>
 </div>

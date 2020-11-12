@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\BarangSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Barangs';
+$this->title = 'Barang';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="barang-index">
@@ -19,20 +19,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Barang', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <div class="box box-success">
+        <div class="box-header">
+            <div class="col-md-12" style="padding: 0;">
+                <div class="box-body">
+                    <?= GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        'filterModel' => $searchModel,
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                            'id_barang',
+                            'nama_barang',
+                            'harga',
+                            'jenis_harga',
+                            'jenis_pembayaran',
 
-            'id_barang',
-            'nama_barang',
-            'harga',
-            'jenis_harga',
-            'jenis_pembayaran',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                            ['class' => 'yii\grid\ActionColumn'],
+                        ],
+                    ]); ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

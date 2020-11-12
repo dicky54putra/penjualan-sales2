@@ -9,33 +9,32 @@ use yii\widgets\ActiveForm;
 ?>
 
 <div class="menu-navigasi-form">
-<div class="box box-success">
-<div class="box-header">
-<div class="col-md-12" style="padding: 0;">
-<div class="box-body">
-    <?php $form = ActiveForm::begin(); ?>
+    <div class="box box-success">
+        <div class="box-header">
+            <div class="col-md-12" style="padding: 0;">
+                <div class="box-body">
+                    <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nama_menu')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'nama_menu')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'url')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'id_parent')->dropDownlist($menuParent, ['prompt'=>'Pilih Parent Menu']) ?>
+                    <?= $form->field($model, 'id_parent')->dropDownlist($menuParent, ['prompt' => 'Pilih Parent Menu']) ?>
 
-    <?php 
-    if (!$model->isNewRecord)
-    {
-        echo $form->field($model, 'no_urut')->textInput();
-    }
-    ?>
+                    <?php
+                    if (!$model->isNewRecord) {
+                        echo $form->field($model, 'no_urut')->textInput();
+                    }
+                    ?>
 
-    <?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'icon')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->dropDownlist(array(0=>"Aktif", 1=>"Tidak Aktif")) ?>
+                    <?= $form->field($model, 'status')->dropDownlist(array(0 => "Aktif", 1 => "Tidak Aktif")) ?>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
-    </div>
+                    <div class="form-group">
+                        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+                    </div>
 
-    <?php ActiveForm::end(); ?>
+                    <?php ActiveForm::end(); ?>
 
-</div>
+                </div>

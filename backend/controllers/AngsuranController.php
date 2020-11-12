@@ -90,7 +90,7 @@ class AngsuranController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_angsuran]);
+            return $this->redirect(['penjualan/view', 'id' => $_GET['penjualan']]);
         }
 
         return $this->render('update', [

@@ -114,6 +114,11 @@ class PenjualanController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionPrint($id)
+    {
+        // $print = $this->renderPartial('cetak', [
+        return $this->renderPartial('print');
+    }
     /**
      * Finds the Penjualan model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

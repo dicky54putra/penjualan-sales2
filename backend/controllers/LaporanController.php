@@ -44,14 +44,14 @@ class LaporanController extends Controller
         ]);
     }
 
-    public function actionCetakLaporan()
+    public function actionLaporanPemesanan()
     {
         $tanggal_awal = Yii::$app->request->post('tanggal_awal');
         $tanggal_akhir = Yii::$app->request->post('tanggal_akhir');
         $sales = Yii::$app->request->post('sales');
         $status = Yii::$app->request->post('status');
 
-        return $this->renderPartial('cetak_laporan', [
+        return $this->render('laporan_pemesanan', [
             'tanggal_awal' => $tanggal_awal,
             'tanggal_akhir' => $tanggal_akhir,
             'sales' => $sales,
@@ -59,14 +59,11 @@ class LaporanController extends Controller
         ]);
     }
 
-    public function actionExportLaporan()
+    public function actionLaporanPemesananPrint($tanggal_awal,  $tanggal_akhir)
     {
-        $tanggal_awal = Yii::$app->request->post('tanggal_awal');
-        $tanggal_akhir = Yii::$app->request->post('tanggal_akhir');
         $sales = Yii::$app->request->post('sales');
         $status = Yii::$app->request->post('status');
-
-        return $this->renderPartial('export_laporan', [
+        return $this->renderPartial('laporan_pemesanan_print', [
             'tanggal_awal' => $tanggal_awal,
             'tanggal_akhir' => $tanggal_akhir,
             'sales' => $sales,
@@ -74,16 +71,43 @@ class LaporanController extends Controller
         ]);
     }
 
-    public function actionPemesanan()
+    public function actionLaporanPenjualan()
     {
         $tanggal_awal = Yii::$app->request->post('tanggal_awal');
         $tanggal_akhir = Yii::$app->request->post('tanggal_akhir');
         $sales = Yii::$app->request->post('sales');
         $status = Yii::$app->request->post('status');
 
+        return $this->render('laporan_penjualan', [
+            'tanggal_awal' => $tanggal_awal,
+            'tanggal_akhir' => $tanggal_akhir,
+            'sales' => $sales,
+            'status' => $status,
+        ]);
+    }
 
 
-        return $this->render('pemesanan', [
+    public function actionLaporanAngsuran()
+    {
+        $tanggal_awal = Yii::$app->request->post('tanggal_awal');
+        $tanggal_akhir = Yii::$app->request->post('tanggal_akhir');
+        $sales = Yii::$app->request->post('sales');
+        $status = Yii::$app->request->post('status');
+
+        return $this->render('laporan_angsuran', [
+            'tanggal_awal' => $tanggal_awal,
+            'tanggal_akhir' => $tanggal_akhir,
+            'sales' => $sales,
+            'status' => $status,
+        ]);
+    }
+
+    public function actionLaporanAngsuranPrint($tanggal_awal,  $tanggal_akhir)
+    {
+        $sales = Yii::$app->request->post('sales');
+        $status = Yii::$app->request->post('status');
+
+        return $this->renderPartial('laporan_angsuran_print', [
             'tanggal_awal' => $tanggal_awal,
             'tanggal_akhir' => $tanggal_akhir,
             'sales' => $sales,
