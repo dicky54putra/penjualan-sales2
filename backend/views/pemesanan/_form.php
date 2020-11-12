@@ -1,6 +1,7 @@
 <?php
 
 use backend\models\Barang;
+use backend\models\Login;
 use backend\models\Pelanggan;
 use backend\models\Sales;
 use yii\helpers\ArrayHelper;
@@ -25,9 +26,21 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'jumlah_pemesanan')->textInput(['type' => 'number', 'value' => 1]) ?>
 
     <?php
-    $sales = ArrayHelper::map(Sales::find()->all(), "id_sales", function ($model) {
-        return $model->nama_sales . ' - ' . $model->alamat;
-    });
+    $login = Login::find()->where(['id_login' => Yii::$app->user->identity->id_login])->one();
+    $tlp = preg_replace("/[^0-9]/", "", $login->username);
+
+    $userrole = Yii::$app->db->createCommand("SELECT system_role.nama_role FROM user_role INNER JOIN system_role ON system_role.id_system_role = user_role.id_system_role WHERE user_role.id_login = " . Yii::$app->user->id)->queryScalar();
+    if ($userrole == 'SALES') {
+        $sales = ArrayHelper::map(Sales::find()->where(['nama_sales' => $login->nama])->andWhere(['telp' => $tlp])->all(), "id_sales", function ($model) {
+            return $model->nama_sales . ' - ' . $model->alamat;
+        });
+        $sales_ = Sales::find()->where(['nama_sales' => $login->nama])->andWhere(['telp' => $tlp])->one();
+        $model->id_sales = $sales_->id_sales;
+    } else {
+        $sales = ArrayHelper::map(Sales::find()->all(), "id_sales", function ($model) {
+            return $model->nama_sales . ' - ' . $model->alamat;
+        });
+    }
     ?>
     <?= $form->field($model, 'id_sales')->dropDownList($sales, ['prompt' => 'Pilih Sales'])->label('Sales') ?>
 

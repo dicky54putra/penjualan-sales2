@@ -74,7 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     // var_dump($kolektor, $login);
                     // die;
                     ?>
-                    <?= Html::a('Pembayaran', ['angsuran/create', 'pemesanan' => $model->id_pemesanan, 'kolektor' => $kolektor->id_kolektor, 'angsuran' => $angsuran], ['class' => 'btn btn-success']) ?>
+                    <?= Html::a('Pembayaran', ['angsuran/create', 'pemesanan' => $model->id_pemesanan, 'kolektor' => $kolektor->id_kolektor, 'angsuran' => $angsuran, 'penjualan' => $model->id_penjualan], ['class' => 'btn btn-success']) ?>
                     <table class="table">
                         <thead>
                             <tr>
@@ -98,7 +98,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <td><?= $no ?></td>
                                     <td><?= tanggal_indo($val['tanggal_angsuran']) ?></td>
                                     <td><?= $val['total_angsuran'] ?></td>
-                                    <td></td>
+                                    <td>
+                                        <?= Html::a('<span class="glyphicon glyphicon-print"></span>', ['update', 'id' => $val['id_angsuran']], ['class' => 'btn btn-primary btn-sm']) ?>
+                                        <?= Html::a('<span class="glyphicon glyphicon-edit"></span>', ['update', 'id' => $val['id_angsuran']], ['class' => 'btn btn-success btn-sm']) ?>
+                                        <?= Html::a(
+                                            '<span class="glyphicon glyphicon-trash"></span>',
+                                            ['angsuran/delete', 'id' => $val['id_angsuran'], 'back' => $_GET['id']],
+                                            [
+                                                'class' => 'btn btn-danger btn-sm',
+                                                'data' => [
+                                                    'confirm' => 'Are you sure you want to delete this item?',
+                                                    'method' => 'post',
+                                                ],
+                                            ]
+                                        ) ?>
+                                    </td>
                                 </tr>
                             <?php } ?>
                         </tbody>

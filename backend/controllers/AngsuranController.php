@@ -66,8 +66,11 @@ class AngsuranController extends Controller
     {
         $model = new Angsuran();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_angsuran]);
+        if ($model->load(Yii::$app->request->post())) {
+            // echo $_GET['penjualan'];
+            // die;
+            $model->save();
+            return $this->redirect(['penjualan/view', 'id' => $_GET['penjualan']]);
         }
 
         return $this->render('create', [
@@ -102,11 +105,11 @@ class AngsuranController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $back)
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['penjualan/view', 'id' => $back]);
     }
 
     /**

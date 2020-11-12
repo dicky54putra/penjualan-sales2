@@ -72,7 +72,7 @@ class PenjualanController extends Controller
         $model = new Penjualan();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_penjualan]);
+            return $this->redirect(['pemesanan/view', 'id' => $model->id_pemesanan]);
         }
 
         return $this->render('create', [
