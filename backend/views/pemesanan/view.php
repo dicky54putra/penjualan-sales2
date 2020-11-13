@@ -10,7 +10,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Pemesanan */
 
-$this->title = $model->id_pemesanan;
+$this->title = $model->tanggal_pemesanan;
 $this->params['breadcrumbs'][] = ['label' => 'Pemesanans', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -38,42 +38,49 @@ $this->params['breadcrumbs'][] = $this->title;
         }
         ?>
     </p>
+    <div class="box box-success">
+        <div class="box-header">
+            <div class="col-md-12" style="padding: 0;">
+                <div class="box-body">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            // 'id_pemesanan',
+                            'tanggal_pemesanan',
+                            'paket_pemesanan',
+                            'jumlah_pemesanan',
+                            [
+                                'attribute' => 'id_sales',
+                                'format' => 'raw',
+                                'label' => 'Sales',
+                                'value' => function ($model) {
+                                    $sales = Sales::findOne(['id_sales' => $model->id_sales]);
+                                    return (!empty($sales->nama_sales)) ? $sales->nama_sales : '';
+                                }
+                            ],
+                            [
+                                'attribute' => 'id_pelanggan',
+                                'format' => 'raw',
+                                'label' => 'Pelanggan',
+                                'value' => function ($model) {
+                                    $pelanggan = Pelanggan::findOne(['id_pelanggan' => $model->id_pelanggan]);
+                                    return (!empty($pelanggan->nama_pelanggan)) ? $pelanggan->nama_pelanggan : '';
+                                }
+                            ],
+                            [
+                                'attribute' => 'id_barang',
+                                'format' => 'raw',
+                                'label' => 'Barang',
+                                'value' => function ($model) {
+                                    $barang = Barang::findOne(['id_barang' => $model->id_barang]);
+                                    return (!empty($barang->nama_barang)) ? $barang->nama_barang . ' - ' . number_format($barang->harga) : '';
+                                }
+                            ],
+                        ],
+                    ]) ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            // 'id_pemesanan',
-            'tanggal_pemesanan',
-            'paket_pemesanan',
-            'jumlah_pemesanan',
-            [
-                'attribute' => 'id_sales',
-                'format' => 'raw',
-                'label' => 'Sales',
-                'value' => function ($model) {
-                    $sales = Sales::findOne(['id_sales' => $model->id_sales]);
-                    return (!empty($sales->nama_sales)) ? $sales->nama_sales : '';
-                }
-            ],
-            [
-                'attribute' => 'id_pelanggan',
-                'format' => 'raw',
-                'label' => 'Pelanggan',
-                'value' => function ($model) {
-                    $pelanggan = Pelanggan::findOne(['id_pelanggan' => $model->id_pelanggan]);
-                    return (!empty($pelanggan->nama_pelanggan)) ? $pelanggan->nama_pelanggan : '';
-                }
-            ],
-            [
-                'attribute' => 'id_barang',
-                'format' => 'raw',
-                'label' => 'Barang',
-                'value' => function ($model) {
-                    $barang = Barang::findOne(['id_barang' => $model->id_barang]);
-                    return (!empty($barang->nama_barang)) ? $barang->nama_barang . ' - ' . number_format($barang->harga) : '';
-                }
-            ],
-        ],
-    ]) ?>
-
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

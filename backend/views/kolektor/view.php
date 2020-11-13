@@ -25,15 +25,22 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+    <div class="box box-success">
+        <div class="box-header">
+            <div class="col-md-12" style="padding: 0;">
+                <div class="box-body">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            // 'id_kolektor',
+                            'nama_kolektor',
+                            'alamat:ntext',
+                            'tlp',
+                        ],
+                    ]) ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id_kolektor',
-            'nama_kolektor',
-            'alamat:ntext',
-            'tlp',
-        ],
-    ]) ?>
-
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

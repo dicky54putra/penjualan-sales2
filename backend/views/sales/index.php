@@ -13,24 +13,32 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="sales-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <p>
         <?= Html::a('Create Sales', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+    <div class="box box-success">
+        <div class="box-header">
+            <div class="col-md-12" style="padding: 0;">
+                <div class="box-body">
+                    <?= GridView::widget([
+                        'dataProvider' => $dataProvider,
+                        'filterModel' => $searchModel,
+                        'columns' => [
+                            ['class' => 'yii\grid\SerialColumn'],
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                            // 'id_sales',
+                            'nama_sales',
+                            'alamat:ntext',
+                            'telp',
 
-            'id_sales',
-            'nama_sales',
-            'alamat:ntext',
-            'telp',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                            ['class' => 'yii\grid\ActionColumn'],
+                        ],
+                    ]); ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

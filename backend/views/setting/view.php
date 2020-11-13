@@ -26,29 +26,32 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-<div class="box">
-<div class="box-header">
-<div class="col-md-12" style="padding: 0;">
-<div class="box-body">
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            // 'id_setting',
-            'nama',
-            'email:email',
-            'alamat:ntext',
-            'telepon',
-            'nama_bank',
-            'nomor_rekening',
-            [
-                'attribute' => 'foto',
-                'format'    => 'html',
-                'value'     => function ($model)
-                {
-                    return "<img src='upload/$model->foto' width='150'>";
-                }
-            ],
-        ],
-    ]) ?>
+    <div class="box">
+        <div class="box-header">
+            <div class="col-md-12" style="padding: 0;">
+                <div class="box-body">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            // 'id_setting',
+                            'nama',
+                            'email:email',
+                            'alamat:ntext',
+                            'telepon',
+                            'nama_bank',
+                            'nomor_rekening',
+                            [
+                                'attribute' => 'foto',
+                                'format'    => 'html',
+                                'value'     => function ($model) {
+                                    return "<img src='upload/$model->foto' width='150'>";
+                                }
+                            ],
+                        ],
+                    ]) ?>
 
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

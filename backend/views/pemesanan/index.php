@@ -19,15 +19,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
     ?>
 
+    <h1><?= Html::encode($this->title) ?></h1>
+    <p>
+        <?= Html::a('Create Pemesanan', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 
     <div class="box box-primary">
-        <div class="box-header">
-            <h1><?= Html::encode($this->title) ?></h1>
-            <p>
-                <?= Html::a('Create Pemesanan', ['create'], ['class' => 'btn btn-success']) ?>
-            </p>
-
-        </div>
         <div class="box-body">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,

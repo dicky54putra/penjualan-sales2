@@ -11,7 +11,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Penjualan */
 
-$this->title = $model->id_penjualan;
+$this->title = $model->tanggal_penjualan;
 $this->params['breadcrumbs'][] = ['label' => 'Penjualans', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -30,26 +30,32 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            // 'id_penjualan',
-            'tanggal_penjualan',
-            'total_penjualan',
-            [
-                'attribute' => 'id_kolektor',
-                'format' => 'raw',
-                'label' => 'Kolektor',
-                'value' => function ($model) {
-                    $kolektor = Kolektor::findOne(['id_kolektor' => $model->id_kolektor]);
-                    return (!empty($kolektor->nama_kolektor)) ? $kolektor->nama_kolektor : '';;
-                }
-            ],
-            'id_pemesanan',
-        ],
-    ]) ?>
-
+    <div class="box box-success">
+        <div class="box-header">
+            <div class="col-md-12" style="padding: 0;">
+                <div class="box-body">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            // 'id_penjualan',
+                            'tanggal_penjualan',
+                            'total_penjualan',
+                            [
+                                'attribute' => 'id_kolektor',
+                                'format' => 'raw',
+                                'label' => 'Kolektor',
+                                'value' => function ($model) {
+                                    $kolektor = Kolektor::findOne(['id_kolektor' => $model->id_kolektor]);
+                                    return (!empty($kolektor->nama_kolektor)) ? $kolektor->nama_kolektor : '';;
+                                }
+                            ],
+                            'id_pemesanan',
+                        ],
+                    ]) ?>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="box box-primary">
         <div class="box-body">
             <div class="row">

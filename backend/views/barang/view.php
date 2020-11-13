@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model backend\models\Barang */
 
-$this->title = $model->id_barang;
+$this->title = $model->nama_barang;
 $this->params['breadcrumbs'][] = ['label' => 'Barangs', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -25,16 +25,23 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
+    <div class="box box-success">
+        <div class="box-header">
+            <div class="col-md-12" style="padding: 0;">
+                <div class="box-body">
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            // 'id_barang',
+                            'nama_barang',
+                            'harga',
+                            'jenis_harga',
+                            'jenis_pembayaran',
+                        ],
+                    ]) ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id_barang',
-            'nama_barang',
-            'harga',
-            'jenis_harga',
-            'jenis_pembayaran',
-        ],
-    ]) ?>
-
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
