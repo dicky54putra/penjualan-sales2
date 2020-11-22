@@ -36,7 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             //'nomor_rekening',
                             //'foto',
 
-                            ['class' => 'yii\grid\ActionColumn'],
+                            [
+                                'class' => 'yii\grid\ActionColumn',
+                                'header' => 'Actions',
+                                'headerOptions' => ['style' => 'color:#337ab7'],
+                                'template' => '{update}',
+                            ],
                         ],
                         'containerOptions' => ['style' => 'overflow: auto'], // only set when $responsive = false
                         'headerRowOptions' => ['class' => 'kartik-sheet-style'],

@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -24,14 +25,14 @@ $fieldOptions2 = [
 
 <div class="login-box">
     <div class="login-logo">
-        </div>
+    </div>
     <!-- /.login-logo -->
 
     <div class="login-box-body">
         <p align="center">
-        <!-- <img src="images/logo.jpg" width="100%" height="100%"><br><br> -->
-        <h4 align="center"><b>SISTEM INFORMASI<br>ADMINISTRASI PENJUALAN</b></h4>
-        <h5 align="center"><b>PT. VAGANZA SUMBER SUKSES<br>CABANG SEAMARANG</b></h5>
+            <!-- <img src="images/logo.jpg" width="100%" height="100%"><br><br> -->
+            <h4 align="center"><b>SISTEM INFORMASI<br>ADMINISTRASI PENJUALAN</b></h4>
+            <h5 align="center"><b>PT. VAGANZA SUMBER SUKSES<br>CABANG SEAMARANG</b></h5>
         </p>
 
 

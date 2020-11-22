@@ -5,6 +5,8 @@ use yii\helpers\Html;
 use backend\models\Pelanggan;
 use backend\models\Pemesanan;
 use backend\models\Sales;
+use backend\models\Setting;
+
 ?>
 <style>
     .tabel {
@@ -45,6 +47,19 @@ use backend\models\Sales;
 if ($tanggal_awal != '' && $tanggal_akhir != '') {
     # code...
 ?>
+    <table style="width: 100%;">
+        <tr>
+            <td align="center"><img src="images/logo2.png" height="100px"></td>
+            <td align="center">
+                <h2>
+                    <?php
+                    $setting = Setting::findOne(1);
+                    echo $setting->nama;
+                    ?>
+                </h2>
+            </td>
+        </tr>
+    </table>
     <p style="font-family: 'Times New Roman'">
         <h4>
             <?= $this->title ?> Pertanggal : <?= date('d/m/Y', strtotime($tanggal_awal)) ?> s/d <?= date('d/m/Y', strtotime($tanggal_akhir)) ?>

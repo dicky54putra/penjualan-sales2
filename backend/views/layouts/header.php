@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 
 /* @var $this \yii\web\View */
@@ -6,10 +7,10 @@ use yii\helpers\Html;
 ?>
 
 <header class="main-header">
-	
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
-    <?= Html::a('<span class="logo-mini">GSS</span><span class="logo-lg"><marquee>PT. VAGANZA SUMBER SUKSES</marquee></span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+    <?= Html::a('<span class="logo-mini" style="color:black;">POS</span><span class="logo-lg"><img src="images/logo2.png" height="50px" alt="" srcset=""></span>', Yii::$app->homeUrl, ['class' => 'logo', 'style' => ['background-image' => 'url(\'images/logo2.png\')']]) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 
@@ -21,25 +22,24 @@ use yii\helpers\Html;
 
             <ul class="nav navbar-nav">
 
-                
+
                 <!-- User Account: style can be found in dropdown.less -->
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= "upload/".Yii::$app->user->identity->foto ?>" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs"><?= Yii::$app->user->identity->nama?></span>
+                        <img src="<?= "upload/" . Yii::$app->user->identity->foto ?>" class="user-image" alt="User Image" />
+                        <span class="hidden-xs"><?= Yii::$app->user->identity->nama ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= "upload/".Yii::$app->user->identity->foto ?>" class="img-circle"
-                                 alt="User Image"/>
+                            <img src="<?= "upload/" . Yii::$app->user->identity->foto ?>" class="img-circle" alt="User Image" />
 
                             <p>
                                 <?= Yii::$app->user->identity->nama ?>
                             </p>
                         </li>
-                        
+
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
@@ -56,7 +56,7 @@ use yii\helpers\Html;
                     </ul>
                 </li>
 
-                
+
             </ul>
         </div>
     </nav>

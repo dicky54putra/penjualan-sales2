@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Nov 2020 pada 14.14
+-- Waktu pembuatan: 16 Nov 2020 pada 10.54
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.3
 
@@ -281,7 +281,18 @@ INSERT INTO `log` (`id`, `level`, `category`, `log_time`, `prefix`, `message`) V
 (157, 4, 'yii\\db\\Command::execute', 1605170342.6908, 'pimpiinan', 'INSERT INTO `menu_navigasi_role` (`id_system_role`, `id_menu`) VALUES (26, 5)'),
 (158, 4, 'yii\\db\\Command::execute', 1605170342.6975, 'pimpiinan', 'INSERT INTO `menu_navigasi_role` (`id_system_role`, `id_menu`) VALUES (1, 5)'),
 (159, 0, 'Login', 1605186824.018, 'Joni', 'Login'),
-(160, 4, 'yii\\db\\Command::execute', 1605186824.0183, 'Joni', 'INSERT INTO `log` (`level`, `category`, `log_time`, `prefix`, `message`) VALUES (0, \'Login\', 1605186824.018, \'Joni\', \'Login\')');
+(160, 4, 'yii\\db\\Command::execute', 1605186824.0183, 'Joni', 'INSERT INTO `log` (`level`, `category`, `log_time`, `prefix`, `message`) VALUES (0, \'Login\', 1605186824.018, \'Joni\', \'Login\')'),
+(161, 0, 'Login', 1605230145.6575, 'Administrator', 'Login'),
+(162, 4, 'yii\\db\\Command::execute', 1605230145.6577, 'Administrator', 'INSERT INTO `log` (`level`, `category`, `log_time`, `prefix`, `message`) VALUES (0, \'Login\', 1605230145.6575, \'Administrator\', \'Login\')'),
+(163, 0, 'Login', 1605230824.8066, 'pimpiinan', 'Login'),
+(164, 4, 'yii\\db\\Command::execute', 1605230824.807, 'pimpiinan', 'INSERT INTO `log` (`level`, `category`, `log_time`, `prefix`, `message`) VALUES (0, \'Login\', 1605230824.8066, \'pimpiinan\', \'Login\')'),
+(165, 0, 'Login', 1605274966.3528, 'Administrator', 'Login'),
+(166, 4, 'yii\\db\\Command::execute', 1605274966.3531, 'Administrator', 'INSERT INTO `log` (`level`, `category`, `log_time`, `prefix`, `message`) VALUES (0, \'Login\', 1605274966.3528, \'Administrator\', \'Login\')'),
+(167, 0, 'Login', 1605314946.3808, 'pimpiinan', 'Login'),
+(168, 4, 'yii\\db\\Command::execute', 1605314946.381, 'pimpiinan', 'INSERT INTO `log` (`level`, `category`, `log_time`, `prefix`, `message`) VALUES (0, \'Login\', 1605314946.3808, \'pimpiinan\', \'Login\')'),
+(169, 4, 'yii\\db\\Command::execute', 1605316127.6849, 'pimpiinan', 'UPDATE `setting` SET `nomor_rekening`=2147483647, `foto`=NULL WHERE `id_setting`=1'),
+(170, 4, 'yii\\db\\Command::execute', 1605316405.3377, 'pimpiinan', 'UPDATE `setting` SET `nomor_rekening`=2147483647, `foto`=NULL WHERE `id_setting`=1'),
+(171, 4, 'yii\\db\\Command::execute', 1605316524.2002, 'pimpiinan', 'UPDATE `setting` SET `nomor_rekening`=2147483647 WHERE `id_setting`=1');
 
 -- --------------------------------------------------------
 
@@ -545,7 +556,7 @@ CREATE TABLE `setting` (
 --
 
 INSERT INTO `setting` (`id_setting`, `nama`, `email`, `alamat`, `telepon`, `nama_bank`, `nomor_rekening`, `foto`) VALUES
-(1, 'PT. VAGANZA SUMBER SUKSES CABANG SEMARANG', '-', '-', '085692228990', 'Bank Mandiri, KCP Sisingamangaraja Semarang', 2147483647, '1595661202_GSS.png');
+(1, 'PT. VAGANZA SUMBER SUKSES CABANG SEMARANG', '-', '-', '085692228990', 'Bank Mandiri, KCP Sisingamangaraja Semarang', 2147483647, '1595581672_GSS.png');
 
 -- --------------------------------------------------------
 
@@ -728,7 +739,7 @@ ALTER TABLE `kolektor`
 -- AUTO_INCREMENT untuk tabel `log`
 --
 ALTER TABLE `log`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=172;
 
 --
 -- AUTO_INCREMENT untuk tabel `login`

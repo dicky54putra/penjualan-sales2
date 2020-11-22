@@ -57,7 +57,6 @@ class SettingController extends Controller
             ],
 
         ];
-
     }
 
 
@@ -74,12 +73,11 @@ class SettingController extends Controller
 
     {
 
-        if (Yii::$app->user->isGuest) { 
+        if (Yii::$app->user->isGuest) {
 
             header("Location: index.php");
 
             exit;
-
         }
 
         $searchModel = new SettingSearch();
@@ -95,7 +93,6 @@ class SettingController extends Controller
             'dataProvider' => $dataProvider,
 
         ]);
-
     }
 
 
@@ -116,12 +113,11 @@ class SettingController extends Controller
 
     {
 
-        if (Yii::$app->user->isGuest) { 
+        if (Yii::$app->user->isGuest) {
 
             header("Location: index.php");
 
             exit;
-
         }
 
         return $this->render('view', [
@@ -129,7 +125,6 @@ class SettingController extends Controller
             'model' => $this->findModel($id),
 
         ]);
-
     }
 
 
@@ -148,22 +143,20 @@ class SettingController extends Controller
 
     {
 
-        if (Yii::$app->user->isGuest) { 
+        if (Yii::$app->user->isGuest) {
 
             header("Location: index.php");
 
             exit;
-
         }
 
         $model = new Setting();
 
 
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
 
             return $this->redirect(['view', 'id' => $model->id_setting]);
-
         }
 
 
@@ -173,7 +166,6 @@ class SettingController extends Controller
             'model' => $model,
 
         ]);
-
     }
 
 
@@ -196,32 +188,30 @@ class SettingController extends Controller
 
     {
 
-        if (Yii::$app->user->isGuest) { 
+        if (Yii::$app->user->isGuest) {
 
             header("Location: index.php");
 
             exit;
-
         }
 
         $model = $this->findModel($id);
 
 
 
-        if ($model->load(Yii::$app->request->post()) ) {
+        if ($model->load(Yii::$app->request->post())) {
 
-            
+
 
             $model->foto = UploadedFile::getInstance($model, 'foto');
 
-            
+
 
             $model->save();
 
 
 
             return $this->redirect(['view', 'id' => $model->id_setting]);
-
         }
 
 
@@ -231,7 +221,6 @@ class SettingController extends Controller
             'model' => $model,
 
         ]);
-
     }
 
 
@@ -254,12 +243,11 @@ class SettingController extends Controller
 
     {
 
-        if (Yii::$app->user->isGuest) { 
+        if (Yii::$app->user->isGuest) {
 
             header("Location: index.php");
 
             exit;
-
         }
 
         $this->findModel($id)->delete();
@@ -267,7 +255,6 @@ class SettingController extends Controller
 
 
         return $this->redirect(['index']);
-
     }
 
 
@@ -293,14 +280,10 @@ class SettingController extends Controller
         if (($model = Setting::findOne($id)) !== null) {
 
             return $model;
-
         }
 
 
 
         throw new NotFoundHttpException('The requested page does not exist.');
-
     }
-
 }
-

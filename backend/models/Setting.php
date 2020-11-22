@@ -32,7 +32,7 @@ class Setting extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama', 'email', 'alamat', 'telepon', 'nama_bank', 'nomor_rekening', 'foto'], 'required'],
+            [['nama', 'email', 'alamat', 'telepon', 'nama_bank', 'nomor_rekening'], 'required'],
             [['alamat'], 'string'],
             [['nomor_rekening'], 'integer'],
             [['nama', 'email', 'telepon', 'nama_bank'], 'string', 'max' => 100],
@@ -59,15 +59,23 @@ class Setting extends \yii\db\ActiveRecord
 
     public function beforeSave($insert)
     {
-        if (parent::beforeSave($insert)) 
-        {
-            
-            $filename = time()."_". str_replace(" ","_",$this->foto->baseName) . '.' . $this->foto->extension;
-            $this->foto->saveAs('upload/' .$filename);
-            $this->foto = $filename;
-            
+        if (parent::beforeSave($insert)) {
+
+            if ($this->foto) {
+                if (!empty($this->foto->baseName)) {
+                    $filename = time() . "_" . str_replace(" ", "_", $this->foto->baseName) . '.' . $this->foto->extension;
+                    $this->foto->saveAs('upload/' . $filename);
+                    $this->foto = $filename;
+                }
+            } else {
+                $foto = Setting::findOne(1);
+                if (!empty($foto->foto)) {
+                    $this->foto = $foto->foto;
+                } else {
+                    $this->foto = "avatar5.png";
+                }
+            }
             return true;
         }
-        
     }
 }
