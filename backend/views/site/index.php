@@ -20,7 +20,7 @@ $this->title = 'My Yii Application';
 				<div class="box-body">
 					<div class="jumbotron">
 						<h3>Welcome, <?= Yii::$app->user->identity->nama ?>!</h3>
-						<img src="/penjualan-sales2/backend/web/images/logo2.png" height="200"><br><br>
+						<img src="images/logo2.png" height="200"><br><br>
 						<p>Jln. Sinar Sejahtera I NO.588-Kedungmundu-Tembalang</p><br>
 						<p style="margin-top: -20px;">No.Telp : 024-6703909</p>
 					</div>

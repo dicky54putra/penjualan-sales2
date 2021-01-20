@@ -38,7 +38,7 @@ use yii\widgets\ActiveForm;
                             return $model->nama_sales . ' - ' . $model->alamat;
                         });
                         $sales_ = Sales::find()->where(['nama_sales' => $login->nama])->andWhere(['telp' => $tlp])->one();
-                        $model->id_sales = $sales_->id_sales;
+                        $model->id_sales = ($sales_->id_sales ?? 0);
                     } else {
                         $sales = ArrayHelper::map(Sales::find()->all(), "id_sales", function ($model) {
                             return $model->nama_sales . ' - ' . $model->alamat;
@@ -51,10 +51,13 @@ use yii\widgets\ActiveForm;
                     $pelanggan = ArrayHelper::map(Pelanggan::find()->all(), "id_pelanggan", function ($model) {
                         return $model->nama_pelanggan . ' - ' . $model->alamat;
                     });
+                    $barang = ArrayHelper::map(Barang::find()->all(), "id_barang", function ($model) {
+                        return $model->nama_barang;
+                    });
                     ?>
                     <?= $form->field($model, 'id_pelanggan')->dropDownList($pelanggan, ['prompt' => 'Pilih Pelanggan'])->label('Pelanggan') ?>
 
-                    <?= $form->field($model, 'id_barang')->dropDownList(['prompt' => 'Pilih Barang'])->label('Barang') ?>
+                    <?= $form->field($model, 'id_barang')->dropDownList($barang, ['prompt' => 'Pilih Barang'])->label('Barang') ?>
 
                     <div class="form-group">
                         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

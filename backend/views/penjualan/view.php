@@ -49,7 +49,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return (!empty($kolektor->nama_kolektor)) ? $kolektor->nama_kolektor : '';;
                                 }
                             ],
-                            'id_pemesanan',
                         ],
                     ]) ?>
                 </div>

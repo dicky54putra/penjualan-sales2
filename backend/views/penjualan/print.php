@@ -116,5 +116,5 @@ if (!empty($_GET['id'])) {
 <?php } ?>
 <script type="text/javascript">
     window.print();
-    setTimeout(window.close, 500);
+    // setTimeout(window.close, 500);
 </script>
